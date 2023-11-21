@@ -7,6 +7,7 @@ type BoardArray =
     { value: string | null }[][]
 
 const makeBoard = (size: number) => {
+   
     let board: BoardArray = []
     for (let i = 0; i < size; i++) {
         board.push([])
@@ -60,6 +61,7 @@ const Board = ({ size = 3 }: Props) => {
                 vertical[0].value === 'x' ? x += 1 : o += 1
 
                 setWins(({ o: o, x: x }))
+                setStepsLeft(Math.pow(boardSize, 2))
                 setCanPlay(false)
             } else {
                 vertical = []
@@ -72,6 +74,7 @@ const Board = ({ size = 3 }: Props) => {
                 horizontal[0].value === 'x' ? x += 1 : o += 1
 
                 setWins(({ o: o, x: x }))
+                setStepsLeft(Math.pow(boardSize, 2))
                 setCanPlay(false)
             } else {
                 horizontal = []
@@ -86,6 +89,7 @@ const Board = ({ size = 3 }: Props) => {
             diagonal[0].value === 'x' ? x += 1 : o += 1
 
             setWins(({ o: o, x: x }))
+            setStepsLeft(Math.pow(boardSize, 2))
             setCanPlay(false)
         }
         if (diagonalR.every((el) => el.value === diagonalR[0].value && el.value !== null)) {
@@ -96,6 +100,7 @@ const Board = ({ size = 3 }: Props) => {
             diagonalR[0].value === 'x' ? x += 1 : o += 1
 
             setWins(({ o: o, x: x }))
+            setStepsLeft(Math.pow(boardSize, 2))
             setCanPlay(false)
         }
 
@@ -111,10 +116,11 @@ const Board = ({ size = 3 }: Props) => {
         if (stepsLeft === 0) {
             setCanPlay(false)
             setDialog({ message: "Draw", show: true })
+            setStepsLeft(Math.pow(boardSize, 2))
         }
     }, [currentPlayer])
     return (
-        <div className="flex flex-col gap-2 p-8">
+        <div className="flex flex-col gap-2 p-8 bg-stone-300">
             <div className='flex justify-between'>
                 <span className='p-2 text-xl uppercase'>x:&nbsp;{wins.x}</span>
                 <span className='p-2 text-xl uppercase'>o:&nbsp;{wins.o}</span>
